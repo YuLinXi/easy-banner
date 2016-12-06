@@ -4,8 +4,8 @@
  * by @yumengyuan
  * create 2016/12/6
  * last update 2016/12/6
+ * version @1.0
  */
-
 (function ($) {
     var flag = true,
         now = 0
@@ -22,7 +22,7 @@
     /*******************************************************************************************************************/
     // 构造函数
     var easySlider = function ($element, settings) {
-        var _this = this
+        let _this = this
         // 合并默认参数和实际参数
         _this.options = $.extend({}, _this.options, settings);
         _this.element = $element
@@ -40,13 +40,14 @@
     /*******************************************************************************************************************/
     // 初始化
     easySlider.prototype._init = function () {
-        var _this = this,
+        let _this = this,
             element = _this.element,
             ops  = _this.options
-        var imgBox = _this._createElement()
+        let imgBox = _this._createElement()
         easySlider.prototype.imgBox = imgBox
         if(ops.autoButton) {
-            _this._createButton()
+            let button = _this._createButton()
+            _this._bind(button.left, button.right)
         }else {
             console.log($(ops.left))
             _this._bind($(ops.left), $(ops.right))
@@ -55,7 +56,7 @@
     /*******************************************************************************************************************/
     // 自动生成图片节点
     easySlider.prototype._createElement = function () {
-        var _this = this,
+        let _this = this,
             element = _this.element,
             ops  = _this.options,
             img0 = $("<div class='slider-img-0'></div>"),
@@ -70,13 +71,19 @@
     /*******************************************************************************************************************/
     // 创建切换按钮
     easySlider.prototype._createButton = function () {
-        var _this = this,
+        let _this = this,
             element = _this.element
+        /* 创建左按钮 */
+        let left = $('<span class="slider-left"> <i class="slider-iconfont">&#xe61f;</i></span>')
+        /* 创建右按钮 */
+        let right = $('<span class="slider-right"> <i class="slider-iconfont">&#xe61f;</i></span>')
+        element.append(left, right)
+        return { left, right }
     }
     /*******************************************************************************************************************/
     // 绑定事件
     easySlider.prototype._bind = function (left, right) {
-        var _this = this,
+        let _this = this,
             element = _this.element
         /* 向左切换按钮 */
         left.on('click', function () {
@@ -94,7 +101,7 @@
     /*******************************************************************************************************************/
     // 向左切换
     easySlider.prototype._left = function () {
-        var _this = this,
+        let _this = this,
             ops  = _this.options,
             imgs = ops.imgs,
             { img0, img1, img2 } =  _this.imgBox
@@ -128,7 +135,7 @@
     /*******************************************************************************************************************/
     // 向右切换
     easySlider.prototype._right = function () {
-        var _this = this,
+        let _this = this,
             ops  = _this.options,
             imgs = ops.imgs,
             { img0, img1, img2 } =  _this.imgBox

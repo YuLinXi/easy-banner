@@ -8,7 +8,8 @@
  */
 (function ($) {
     var flag = true,
-        now = 0
+        now = 0,
+        auto
 
     /*******************************************************************************************************************/
     // 插件入口
@@ -32,10 +33,10 @@
     easySlider.prototype.options = {
         /*默认自动创建切换按钮*/
         autoButton: true,
-        /*轮播手动切换时间*/
-        handDuration: 1000,
-        /*自动轮播切换时间*/
-        autoDuration: 2000,
+        /*轮播切换时间*/
+        duration: 1,
+        /*自动轮播停留时间*/
+        stay: 5
     };
     /*******************************************************************************************************************/
     // 初始化
@@ -52,6 +53,7 @@
             console.log($(ops.left))
             _this._bind($(ops.left), $(ops.right))
         }
+        _this._autoPlay()
     }
     /*******************************************************************************************************************/
     // 自动生成图片节点
@@ -97,6 +99,14 @@
                 _this._right()
             }
         })
+        /* 移入轮播图，自动轮播关闭 */
+        element.on('mouseover',function () {
+            clearInterval(auto)
+        })
+        /* 移出轮播图，自动轮播关闭 */
+        element.on('mouseout',function () {
+            _this._autoPlay()
+        })
     }
     /*******************************************************************************************************************/
     // 向左切换
@@ -113,10 +123,9 @@
             img2.css({ backgroundImage: `url(${imgs[now+1]})` })
         }
         /* 执行动画 */
-        img0.css({ webkitAnimation: "slider-moveLeft 2s forwards" })
-        img1.css({ webkitAnimation: "slider-moveLeft 2s forwards" })
-        img2.css({ webkitAnimation: "slider-moveLeft 2s forwards" })
-
+        img0.css({ webkitAnimation: `slider-moveLeft ${ops.duration}s forwards` })
+        img1.css({ webkitAnimation: `slider-moveLeft ${ops.duration}s forwards` })
+        img2.css({ webkitAnimation: `slider-moveLeft ${ops.duration}s forwards` })
         setTimeout(function () {
             /* 动画结束还原 */
             if(now == imgs.length - 1){
@@ -130,7 +139,7 @@
             img1.css({ webkitAnimation: "slider-moveOut 0s forwards" })
             img2.css({ webkitAnimation: "slider-moveOut 0s forwards" })
             flag = true
-        },2000)
+        },ops.duration*1000)
     }
     /*******************************************************************************************************************/
     // 向右切换
@@ -138,18 +147,19 @@
         let _this = this,
             ops  = _this.options,
             imgs = ops.imgs,
-            { img0, img1, img2 } =  _this.imgBox
+            { img0, img1, img2 } =  _this.imgBox,
         flag = false
         /* 动画执行前准备工作 */
         if(now == 0){
             img0.css({ backgroundImage: `url(${imgs[imgs.length - 1]})` })
         }else {
+            console.log('1')
             img0.css({ backgroundImage: `url(${imgs[now-1]})` })
         }
         /* 执行动画 */
-        img0.css({ webkitAnimation: "slider-moveRight 2s forwards" })
-        img1.css({ webkitAnimation: "slider-moveRight 2s forwards" })
-        img2.css({ webkitAnimation: "slider-moveRight 2s forwards" })
+        img0.css({ webkitAnimation: `slider-moveRight ${ops.duration}s forwards` })
+        img1.css({ webkitAnimation: `slider-moveRight ${ops.duration}s forwards` })
+        img2.css({ webkitAnimation: `slider-moveRight ${ops.duration}s forwards` })
         setTimeout(function () {
             /* 动画结束还原 */
             if(now == 0){
@@ -163,7 +173,17 @@
             img1.css({ webkitAnimation: "slider-moveOut 0s forwards" })
             img2.css({ webkitAnimation: "slider-moveOut 0s forwards" })
             flag = true
-        },2000)
+        }, ops.duration*1000)
+    }
+    /*******************************************************************************************************************/
+    // 自动轮播
+    easySlider.prototype._autoPlay = function () {
+        var _this = this,
+            ops = _this.options
+        auto = setInterval(function () {
+            _this._left()
+        },ops.stay*1000)
+
     }
 
 })(window.jQuery)

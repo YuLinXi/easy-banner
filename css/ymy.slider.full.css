@@ -1,0 +1,48 @@
+.slider-img-0 {
+    left: -100%;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-size: cover;
+}
+.slider-img-1 {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-size: cover;
+}
+.slider-img-2 {
+    left: 100%;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-size: cover;
+}
+.slider-icon {
+    width: 100px;
+    height: 200px;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+@-webkit-keyframes slider-moveLeft {
+    from{ transform: translateX(0px) }
+    to { transform: translateX(-100%) }
+}
+@-webkit-keyframes slider-moveRight {
+    from{ transform: translateX(0px) }
+    to { transform: translateX(100%) }
+}
+
+@-webkit-keyframes slider-moveOut {
+    from{ transform: translateX(-100%) }
+    to { transform: translateX(0px) }
+}

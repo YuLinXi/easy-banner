@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link type="text/css" rel="stylesheet" href="./css/ymy.slider.full.css"/>
+<body>
+    <div class="box"></div>
+    <div>
+        <button class="left">left</button>
+        <button class="right">rifht</button>
+    </div>
+</body>
+<script src="./js/jquery-3.1.1.min.js"></script>
+<script src="./js/ymy.slider.full.js"></script>
+<script>
+    let imgs = [
+        './img/banner1.jpg',
+        './img/banner2.jpg',
+        './img/banner3.jpg',
+    ]
+    $('.box').easySlider({
+        imgs: imgs,
+        left: '.left',
+        right: '.right',
+        autoButton: false
+    })
+</script>
+</html>
